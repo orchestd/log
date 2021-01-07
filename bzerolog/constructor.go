@@ -1,9 +1,8 @@
 package bzerolog
 
 import (
-	Helper "bitbucket.org/HeilaSystems/helper"
-	"bitbucket.org/HeilaSystems/helpers"
 	"bitbucket.org/HeilaSystems/log"
+	"bitbucket.org/HeilaSystems/utils/osutils"
 	defaultLogger "github.com/rs/zerolog/log"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
@@ -40,7 +39,7 @@ func DefaultZeroLogBuilder(conf LogSettings) log.Builder {
 }
 
 func newRollingFile(conf LogSettings) io.Writer {
-	serviceName := Helper.GetExecutableName()
+	serviceName := osutils.GetExecutableName()
 	if logFolderPath, err := GetLogFolderPath(serviceName); err != nil {
 		return nil
 	} else if err := os.MkdirAll(logFolderPath, 0744); err != nil {
@@ -59,7 +58,7 @@ func newRollingFile(conf LogSettings) io.Writer {
 }
 
 func GetLogFolderPath(serviceName string) (string, error) {
-	err, path := helpers.GetExecutableDir()
+	err, path := osutils.GetExecutableDir()
 	if err != nil {
 		return serviceName, err
 	}

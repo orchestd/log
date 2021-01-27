@@ -46,6 +46,8 @@ type   ZerologBuilder interface {
 	SetCustomTimeFormatter(format string) ZerologBuilder
 	// IncludeCaller adds caller:line to log entry
 	IncludeCaller() ZerologBuilder
+	// DisableColor Disable the text console logs color
+	DisableColor() ZerologBuilder
 }
 
 type zerologConfig struct {
@@ -57,6 +59,7 @@ type zerologConfig struct {
 	customTimeFormat  string
 	includeCaller     bool
 	skipCallerFrames  int
+	disableColor bool
 }
 
 type zerologBuilder struct {
@@ -120,6 +123,13 @@ func (zb *zerologBuilder) IncrementSkipFrames(skip int) log.Builder {
 	})
 	return zb
 }
+func (zb *zerologBuilder) DisableColor() ZerologBuilder {
+	zb.ll.PushBack(func(cfg *zerologConfig) {
+		cfg.disableColor = true
+	})
+	return zb
+}
+
 
 func (zb *zerologBuilder) Build() log.Logger {
 	config := &zerologConfig{
@@ -127,10 +137,11 @@ func (zb *zerologBuilder) Build() log.Logger {
 		level:             log.TraceLevel,
 		staticFields:      make(map[string]interface{}),
 		contextExtractors: nil,
-		customTimeFormat:  time.RFC3339,
+		customTimeFormat:  time.RFC3339Nano,
 		excludeTimeField:  false,
 		skipCallerFrames:  zerolog.CallerSkipFrameCount + skipWrapperFrames, // bzerolog will add it's own amount of frames to skip and so do we
 		includeCaller:     false,
+		disableColor: false,
 	}
 	// Purely sanity code that should not be ever...
 	if zb == nil {

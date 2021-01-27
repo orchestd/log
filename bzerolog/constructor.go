@@ -16,9 +16,13 @@ type LogSettings struct {
 	LogToConsole      bool
 	ConsoleJsonFormat bool
 	CompressLogsFile  bool
+	DisableConsoleColor bool
 }
 func DefaultZeroLogBuilder(conf LogSettings) log.Builder {
 	builder := Builder().IncludeCaller()
+	if conf.DisableConsoleColor {
+		builder = builder.DisableColor()
+	}
 	var writers []io.Writer
 	if conf.LogToFile {
 		if conf.FileJsonFormat{
@@ -31,7 +35,7 @@ func DefaultZeroLogBuilder(conf LogSettings) log.Builder {
 		if conf.ConsoleJsonFormat {
 			writers = append(writers,os.Stderr)
 		}else{
-			writers = append(writers,ConsoleWriter(false,os.Stderr))
+			writers = append(writers,ConsoleWriter(conf.DisableConsoleColor,os.Stderr))
 		}
 	}
 	mw := io.MultiWriter(writers...)

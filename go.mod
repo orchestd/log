@@ -1,4 +1,4 @@
-module bitbucket.org/HeilaSystems/log
+module github.com/orchestd/log
 
 go 1.14
 

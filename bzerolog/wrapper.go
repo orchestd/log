@@ -3,7 +3,7 @@ package bzerolog
 import (
 	"context"
 
-	"bitbucket.org/HeilaSystems/log"
+	"github.com/orchestd/log"
 	"github.com/rs/zerolog"
 )
 

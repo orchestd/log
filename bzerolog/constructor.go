@@ -1,8 +1,8 @@
 package bzerolog
 
 import (
-	"bitbucket.org/HeilaSystems/log"
-	"bitbucket.org/HeilaSystems/utils/osutils"
+	"github.com/orchestd/log"
+	"github.com/orchestd/utils/osutils"
 	defaultLogger "github.com/rs/zerolog/log"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"

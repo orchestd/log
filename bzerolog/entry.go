@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"bitbucket.org/HeilaSystems/log"
+	"github.com/orchestd/log"
 	"github.com/rs/zerolog"
 )
 

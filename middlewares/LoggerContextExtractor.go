@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"bitbucket.org/HeilaSystems/log"
+	"github.com/orchestd/log"
 	"context"
 	"sort"
 )
